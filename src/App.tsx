@@ -1,14 +1,12 @@
-import { ClientsPage } from "./pages/ClientsPage"
-import { HomePage } from "./pages/HomePage"
+import { AppRoutes } from '@/components'
 
 function App() {
 
 
   return (
-    <>
-      <HomePage />
-      <ClientsPage />
-    </>
+    <section className='App'>
+      <AppRoutes />
+    </section>
   )
 }
 
