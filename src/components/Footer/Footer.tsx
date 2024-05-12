@@ -21,7 +21,7 @@ export const Footer = () => {
         className="flex flex-col justify-center items-center text-sm"
         altImg="logo de lombardidev" 
         href="https://lombardidev.ar"
-        srcImg="/src/assets/logomain.png" 
+        srcImg="/icons/logomain.png" 
         classNameImg="w-16 h-16 mx-auto"  >
         <p className="">@lombardidev 2024</p>
         <span className="visible mx-2 md:invisible">|</span>
