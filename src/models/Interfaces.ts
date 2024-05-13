@@ -1,0 +1,15 @@
+export interface FormData {
+  firstNameClient: string,
+  lastNameClient: string,
+  prefixCLient: number,
+  celClient: number | null,
+  streetClient: string | null,
+  numbStreetClient: number,
+  floorClient: number,
+  DepartmentClient: string,
+  blockClient: number,
+  lotClient: number,
+  localityClient: string,
+  provinceClient: string,
+  stateClient: string,
+}

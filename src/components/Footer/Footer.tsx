@@ -3,7 +3,7 @@ import { Partner } from "./Partner"
 
 export const Footer = () => {
   return (
-    <footer className="h-auto w-full bg-gray-800 mt-10">
+    <footer className="h-auto w-full bg-gray-800 mt-5">
       <section className="text-xl flex flex-col justify-center items-center gap-3 py-4">
         <CallToAction href="/" className="">
           Contactos
