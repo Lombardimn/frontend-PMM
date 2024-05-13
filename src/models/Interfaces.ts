@@ -6,7 +6,7 @@ export interface FormData {
   streetClient: string | null,
   numbStreetClient: number,
   floorClient: number,
-  DepartmentClient: string,
+  departmentClient: string,
   blockClient: number,
   lotClient: number,
   localityClient: string,
