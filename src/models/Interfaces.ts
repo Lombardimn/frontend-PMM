@@ -13,3 +13,15 @@ export interface FormData {
   provinceClient: string,
   stateClient: string,
 }
+
+export interface Province {
+  id: number;
+  id_countrie: number;
+  province: string;
+}
+
+export interface City {
+  id: number;
+  id_province: number;
+  city: string;
+}

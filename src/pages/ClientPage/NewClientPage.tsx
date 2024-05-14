@@ -1,14 +1,43 @@
 import { ButtonAction, CallToAction, Footer, Navbar } from "@/components"
-import { useState } from "react"
+import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Toaster, toast } from "sonner"
-import { FormData } from "../../models/Interfaces"
+import { FormData, Province, City, Country, Provinces, Cities, Neighborhood } from "@/models"
+import {  } from "@/models"
 
 export const NewClientPage = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [submitted, setSubmitted] = useState(false)
 
+  const [province, setProvince] = useState<Province[]>([])
+  const [city, setCity] = useState<City[]>([])
+  const [country, setCountry] = useState('')
+  const [provinceId, setProvinceId] = useState(0)
+
+  const handleCoutry = (e: ChangeEvent<HTMLSelectElement>) => {
+    const getCountryId = parseInt(e.target.value)
+    const getProvinceData: Province[] = Provinces.filter(province => province.id_countrie === getCountryId)
+    setCountry(e.target.value)
+
+    if (getProvinceData.length > 0) {
+      setProvince(getProvinceData)
+
+    } else {
+      setProvince([{ id: 0, id_countrie: 0, province: 'Sin datos' }])
+    }
+  }
+
+  const handleCity = (e: ChangeEvent<HTMLSelectElement>) => {
+    const getProvinceId = parseInt(e.target.value)
+    const getCityData: City[] = Cities.filter(city => city.id_province === getProvinceId)
+    
+    if (getCityData.length > 0) {
+      setCity(getCityData)
+    } else {
+      setCity([{ id: 0, id_province: 0, city: 'Sin datos' }])
+    }
+  }
   const onSubmit = (data: FormData) => {
     if (data.firstNameClient === ' ') {
       console.log(data)
@@ -284,35 +313,105 @@ export const NewClientPage = () => {
                 />
               </div>
             </div>
-            <div className="mx-2">
-              <label htmlFor="localityClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Localidad</label>
-              <input
-                type="text"
-                placeholder="Localidad"
-                name="localityClient"
-                id="localityClient"
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2 mt-3"
-              />
-            </div>
-            <div className="mx-2">
-              <label htmlFor="provinceClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Provincia</label>
-              <input
-                type="text"
-                placeholder="Provincia"
-                name="provinceClient"
-                id="provinceClient"
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2 mt-3"
-              />
-            </div>
-            <div className="mx-2">
+            <div className="mx-2 mt-3">
               <label htmlFor="stateClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">País</label>
-              <input
-                type="text"
-                placeholder="País"
+              <select
                 name="stateClient"
                 id="stateClient"
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2 mt-3"
-              />
+                value={country}
+                onChange={(e) => handleCoutry(e)}
+                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+              >
+                <option 
+                  value="" 
+                  disabled
+                  className="absolute z-10 mt-1 max-h-56 w-2/3 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                >Selecciona un país</option>
+                {
+                  Country.map((country) => (
+                    <option 
+                      value={country.id} 
+                      key={country.id}
+                    >
+                      {country.country}
+                    </option>
+                  ))
+                }
+              </select>
+            </div>
+            <div className="mx-2 mt-3">
+              <label htmlFor="localityClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Provincia</label>
+              <select 
+                name="localityClient" 
+                id="localityClient"
+                onChange={(e) => handleCity(e)}
+                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+              >
+                {/* CONTINUAR AQUI */}
+                <option 
+                  value=""
+                  disabled 
+                  className="absolute z-10 mt-1 max-h-56 w-2/3 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >Selecciona una provincia</option>
+                  {
+                    province.map((province) => (
+                      <option 
+                        value={province.id} 
+                        key={province.id}
+                      >
+                        {province.province}
+                      </option>
+                    ))
+                  }
+              </select>
+            </div>
+            <div className="mx-2 mt-3">
+              <label htmlFor="provinceClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Ciudad</label>
+              <select 
+                name="localityClient" 
+                id="localityClient"
+                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+              >
+                <option 
+                  value=""
+                  disabled 
+                  className="absolute z-10 mt-1 max-h-56 w-2/3 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >Selecciona una Ciudad</option>
+                  {
+                    city.map((city) => (
+                      <option 
+                        value={city.id} 
+                        key={city.id}
+                      >
+                        {city.city}
+                      </option>
+                    ))
+                  }
+              </select>
+            </div>
+            <div className="mx-2 mt-3">
+              <label htmlFor="provinceClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Barrio</label>
+              <select 
+                name="localityClient" 
+                id="localityClient"
+                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+              >
+                <option 
+                  value=""
+                  disabled 
+                  className="absolute z-10 mt-1 max-h-56 w-2/3 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >Selecciona un barrio</option>
+                  {
+                    city.map((city) => (
+                      <option 
+                        value={city.id} 
+                        key={city.id}
+                      >
+                        {city.city}
+                      </option>
+                    ))
+                  }
+              </select>
             </div>
             <section className="flex justify-center gap-4 mt-5 mb-3">
               <ButtonAction type="submit" className="h-auto w-auto text-center text-xl font-semibold p-2 border border-transparent bg-gradient-to-r from-blue-700 from-10% via-sky-700 via-30% bg-cyan-700 to-90% rounded-lg hover:from-blue-500 hover:via-sky-500 hover:to-cyan-500 focus:ring focus:ring-cyan-300">
@@ -329,3 +428,12 @@ export const NewClientPage = () => {
     </>
   )
 }
+
+
+<input
+                type="text"
+                placeholder="Barrio"
+                name="neighborhoodClient"
+                id="neighborhoodClient"
+                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2 mt-3"
+              />
