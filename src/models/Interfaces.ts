@@ -25,3 +25,9 @@ export interface City {
   id_province: number;
   city: string;
 }
+
+export interface Neighborhood {
+  id: number, 
+  id_city: number, 
+  neighborhood: string
+}

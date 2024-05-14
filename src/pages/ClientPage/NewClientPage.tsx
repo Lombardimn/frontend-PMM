@@ -2,27 +2,30 @@ import { ButtonAction, CallToAction, Footer, Navbar } from "@/components"
 import { ChangeEvent, useState } from "react"
 import { useForm } from "react-hook-form"
 import { Toaster, toast } from "sonner"
-import { FormData, Province, City, Country, Provinces, Cities, Neighborhood } from "@/models"
-import {  } from "@/models"
+import { FormData, Province, City, Neighborhood } from "@/models"
+import { Country, Provinces, Cities, Neighborhoods } from "@/models"
 
 export const NewClientPage = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [submitted, setSubmitted] = useState(false)
 
+  const [country, setCountry] = useState('')
+  const [provinceValue, setProvinceValue] = useState('')
+  const [cityValue, setCityValue] = useState('')
+  const [nbhValue, setNbhValue] = useState('')
+
   const [province, setProvince] = useState<Province[]>([])
   const [city, setCity] = useState<City[]>([])
-  const [country, setCountry] = useState('')
-  const [provinceId, setProvinceId] = useState(0)
+  const [neighborhood, setNeighborhood] =  useState<Neighborhood[]>([])
 
-  const handleCoutry = (e: ChangeEvent<HTMLSelectElement>) => {
+  const handleProvince = (e: ChangeEvent<HTMLSelectElement>) => {
     const getCountryId = parseInt(e.target.value)
     const getProvinceData: Province[] = Provinces.filter(province => province.id_countrie === getCountryId)
     setCountry(e.target.value)
 
     if (getProvinceData.length > 0) {
       setProvince(getProvinceData)
-
     } else {
       setProvince([{ id: 0, id_countrie: 0, province: 'Sin datos' }])
     }
@@ -31,13 +34,31 @@ export const NewClientPage = () => {
   const handleCity = (e: ChangeEvent<HTMLSelectElement>) => {
     const getProvinceId = parseInt(e.target.value)
     const getCityData: City[] = Cities.filter(city => city.id_province === getProvinceId)
-    
+    setProvinceValue(e.target.value)
+
     if (getCityData.length > 0) {
       setCity(getCityData)
     } else {
       setCity([{ id: 0, id_province: 0, city: 'Sin datos' }])
     }
   }
+
+  const handleNeighborhood = (e: ChangeEvent<HTMLSelectElement>) => {
+    const getCityId = parseInt(e.target.value)
+    const getNeighborhoodData: Neighborhood [] = Neighborhoods.filter(nbh => nbh.id_city === getCityId)
+    setCityValue(e.target.value)
+
+    if (getNeighborhoodData.length > 0) {
+      setNeighborhood(getNeighborhoodData)
+    } else {
+      setNeighborhood([{ id: 0, id_city: 0, neighborhood: 'Sin datos'}])
+    }
+  }
+
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setNbhValue(e.target.value)
+  }
+
   const onSubmit = (data: FormData) => {
     if (data.firstNameClient === ' ') {
       console.log(data)
@@ -59,8 +80,9 @@ export const NewClientPage = () => {
         theme="system"
         toastOptions={{
           style: {
-            height: '40px',
-            padding: '4px',
+            height: '50px',
+            padding: '6px',
+            fontSize: '18px'
           },
           className: 'class',
         }}
@@ -319,7 +341,7 @@ export const NewClientPage = () => {
                 name="stateClient"
                 id="stateClient"
                 value={country}
-                onChange={(e) => handleCoutry(e)}
+                onChange={(e) => handleProvince(e)}
                 className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
               >
                 <option 
@@ -332,6 +354,7 @@ export const NewClientPage = () => {
                     <option 
                       value={country.id} 
                       key={country.id}
+                      className= "rounded-md bg-slate-50 text-gray-800 p-1 text-base"
                     >
                       {country.country}
                     </option>
@@ -340,14 +363,14 @@ export const NewClientPage = () => {
               </select>
             </div>
             <div className="mx-2 mt-3">
-              <label htmlFor="localityClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Provincia</label>
+              <label htmlFor="provinceClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Provincia</label>
               <select 
-                name="localityClient" 
-                id="localityClient"
+                name="provinceClient" 
+                id="provinceClient"
+                value={provinceValue}
                 onChange={(e) => handleCity(e)}
                 className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
               >
-                {/* CONTINUAR AQUI */}
                 <option 
                   value=""
                   disabled 
@@ -358,6 +381,7 @@ export const NewClientPage = () => {
                       <option 
                         value={province.id} 
                         key={province.id}
+                        className= "rounded-md bg-slate-50 text-gray-800 p-1 text-base"
                       >
                         {province.province}
                       </option>
@@ -366,10 +390,12 @@ export const NewClientPage = () => {
               </select>
             </div>
             <div className="mx-2 mt-3">
-              <label htmlFor="provinceClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Ciudad</label>
+              <label htmlFor="cityClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Ciudad</label>
               <select 
-                name="localityClient" 
-                id="localityClient"
+                name="cityClient" 
+                id="cityClient"
+                value={cityValue}
+                onChange={(e) => handleNeighborhood(e)}
                 className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
               >
                 <option 
@@ -382,6 +408,7 @@ export const NewClientPage = () => {
                       <option 
                         value={city.id} 
                         key={city.id}
+                        className= "rounded-md bg-slate-50 text-gray-800 p-1 text-base"
                       >
                         {city.city}
                       </option>
@@ -390,10 +417,12 @@ export const NewClientPage = () => {
               </select>
             </div>
             <div className="mx-2 mt-3">
-              <label htmlFor="provinceClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Barrio</label>
+              <label htmlFor="neighborhoodClient" className="hidden md:block after:content-['*'] after:ml-0.5 after:text-red-500">Barrio</label>
               <select 
-                name="localityClient" 
-                id="localityClient"
+                name="neighborhoodClient" 
+                id="neighborhoodClient"
+                value={nbhValue}
+                onChange={(e) => handleChange(e)}
                 className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
               >
                 <option 
@@ -402,12 +431,13 @@ export const NewClientPage = () => {
                   className="absolute z-10 mt-1 max-h-56 w-2/3 overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   >Selecciona un barrio</option>
                   {
-                    city.map((city) => (
+                    neighborhood.map((nbh) => (
                       <option 
-                        value={city.id} 
-                        key={city.id}
+                        value={nbh.id} 
+                        key={nbh.id}
+                        className= "rounded-md bg-slate-50 text-gray-800 p-1 text-base"
                       >
-                        {city.city}
+                        {nbh.neighborhood}
                       </option>
                     ))
                   }
@@ -428,12 +458,3 @@ export const NewClientPage = () => {
     </>
   )
 }
-
-
-<input
-                type="text"
-                placeholder="Barrio"
-                name="neighborhoodClient"
-                id="neighborhoodClient"
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2 mt-3"
-              />
