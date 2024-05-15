@@ -32,7 +32,7 @@ export const HomePage = () => {
             <MdiAccountGroup className="scale-[3.0] ml-5 mr-5" />
           </CardSelector>
           <CardSelector 
-            href="/"
+            href="/offers"
             className="py-6 font-bold border border-solid border-transparent rounded-xl border-y-slate-950 h-auto w-auto bg-gradient-to-r  from-blue-700 from-10% via-sky-700 via-30% bg-cyan-700 to-90% hover:from-blue-500 hover:via-sky-500 hover:to-cyan-500 focus:ring focus:ring-cyan-300"
             title="ofertas"
           >

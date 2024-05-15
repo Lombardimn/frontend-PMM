@@ -1,23 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ButtonAction, CallToAction, Footer, Navbar } from "@/components"
-import { ChangeEvent, useState } from "react"
-import { useForm } from "react-hook-form"
-import { Toaster, toast } from "sonner"
-import { FormData, Province, City, Neighborhood } from "@/models"
 import { Country, Provinces, Cities, Neighborhoods } from "@/models"
+import { Province, City, Neighborhood } from "@/models"
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { ChangeEvent, useState } from "react"
+import { Toaster, toast } from "sonner"
 
 export const NewClientPage = () => {
 
   const { register, handleSubmit, formState: { errors } } = useForm()
   const [submitted, setSubmitted] = useState(false)
+ 
+
+  //ESTADOS DE SELECTORES
 
   const [country, setCountry] = useState('')
   const [provinceValue, setProvinceValue] = useState('')
   const [cityValue, setCityValue] = useState('')
   const [nbhValue, setNbhValue] = useState('')
 
+
+  //DATOS DE LOCACIÓN
+
   const [province, setProvince] = useState<Province[]>([])
   const [city, setCity] = useState<City[]>([])
   const [neighborhood, setNeighborhood] =  useState<Neighborhood[]>([])
+
+
+  //FUNCIONES PARA LECTURA DE SELECTORES
 
   const handleProvince = (e: ChangeEvent<HTMLSelectElement>) => {
     const getCountryId = parseInt(e.target.value)
@@ -59,13 +69,19 @@ export const NewClientPage = () => {
     setNbhValue(e.target.value)
   }
 
-  const onSubmit = (data: FormData) => {
+
+
+  //PRE-VALIDACIONES DE CARGA DE DATOS
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     if (data.firstNameClient === ' ') {
       console.log(data)
       toast.error('Campos obligatorios vacios', { duration: 3000 })
       return
     }
     setSubmitted(true)
+    console.log(data)
+    console.log(submitted)
     toast.success('Usuario registrado', { duration: 3000 })
   }
 
@@ -117,7 +133,7 @@ export const NewClientPage = () => {
                   <span
                     className="font-semibold text-red-400 italic mt-1 text-lg"
                   >
-                    {errors.firstNameClient?.message}
+                    {errors.firstNameClient?.message?.toString()}
                   </span>
                 )
               }
@@ -142,7 +158,7 @@ export const NewClientPage = () => {
                   <span
                     className="font-semibold text-red-400 italic mt-1 text-lg"
                   >
-                    {errors.lastNameClient?.message}
+                    {errors.lastNameClient?.message?.toString()}
                   </span>
                 )
               }
@@ -193,7 +209,7 @@ export const NewClientPage = () => {
                     <span
                       className="font-semibold text-red-400 italic mt-1 text-lg"
                     >
-                      {errors.prefixClient?.message}
+                      {errors.prefixClient?.message?.toString()}
                     </span>
                   )
                 }
@@ -202,7 +218,7 @@ export const NewClientPage = () => {
                     <span
                       className="font-semibold text-red-400 italic mt-1 text-lg"
                     >
-                      {errors.celClient?.message}
+                      {errors.celClient?.message?.toString()}
                     </span>
                   )
                 }
@@ -230,7 +246,7 @@ export const NewClientPage = () => {
                     <span
                       className="font-semibold text-red-400 italic mt-1 text-lg"
                     >
-                      {errors.streetClient?.message}
+                      {errors.streetClient?.message?.toString()}
                     </span>
                   )
               }
@@ -289,7 +305,7 @@ export const NewClientPage = () => {
                     <span
                       className="font-semibold text-red-400 italic mt-1 text-lg"
                     >
-                      {errors.numbStreetClient?.message}
+                      {errors.numbStreetClient?.message?.toString()}
                     </span>
                   )
                 }
@@ -298,7 +314,7 @@ export const NewClientPage = () => {
                     <span
                       className="font-semibold text-red-400 italic mt-1 text-lg"
                     >
-                      {errors.floorClient?.message}
+                      {errors.floorClient?.message?.toString()}
                     </span>
                   )
                 }
@@ -307,7 +323,7 @@ export const NewClientPage = () => {
                     <span
                       className="font-semibold text-red-400 italic mt-1 text-lg"
                     >
-                      {errors.departamentClient?.message}
+                      {errors.departamentClient?.message?.toString()}
                     </span>
                   )
                 }
@@ -342,7 +358,7 @@ export const NewClientPage = () => {
                 id="stateClient"
                 value={country}
                 onChange={(e) => handleProvince(e)}
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+                className="rounded-md bg-slate-50 border border-black text-gray-600 w-full p-2"
               >
                 <option 
                   value="" 
@@ -369,7 +385,7 @@ export const NewClientPage = () => {
                 id="provinceClient"
                 value={provinceValue}
                 onChange={(e) => handleCity(e)}
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+                className="rounded-md bg-slate-50 border border-black text-gray-600 w-full p-2"
               >
                 <option 
                   value=""
@@ -396,7 +412,7 @@ export const NewClientPage = () => {
                 id="cityClient"
                 value={cityValue}
                 onChange={(e) => handleNeighborhood(e)}
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+                className="rounded-md bg-slate-50 border border-black text-gray-600 w-full p-2"
               >
                 <option 
                   value=""
@@ -423,7 +439,7 @@ export const NewClientPage = () => {
                 id="neighborhoodClient"
                 value={nbhValue}
                 onChange={(e) => handleChange(e)}
-                className="rounded-md bg-slate-50 border border-black text-gray-800 w-full p-2"
+                className="rounded-md bg-slate-50 border border-black text-gray-600 w-full p-2"
               >
                 <option 
                   value=""
