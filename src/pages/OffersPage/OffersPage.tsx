@@ -52,8 +52,20 @@ export const OffersPage = () => {
           </div>
         </section>
 
-        <section className="text-2xl mx-4 mt-4 p-1 h-[300px] rounded-lg w-auto bg-gradient-to-l from-blue-950 from-10% via-sky-950 via-30% bg-cyan-950 to-90%">
-        </section>
+        <article className="text-2xl mx-4 mt-4 p-1  pb-6 h-auto flex flex-col items-center rounded-lg w-auto bg-gradient-to-l from-blue-950 from-10% via-sky-950 via-30% bg-cyan-950 to-90%">
+          <div className="h-80 w-80 my-2 relative">
+            <img 
+              src="/images/comida.jpeg" 
+              alt="comida"
+              className="w-80 h-40 object-cover rounded-lg" 
+            />
+            <div className="text-white">
+              <h3 className="mx-2 mt-4 text-3xl">Wrapper de carne</h3>
+              <p className="text-xl mx-2 text-slate-200">Con una capa exterior de carne de primera calidad que envuelve un sabroso relleno</p>
+            </div>
+            <p className="absolute right-0 mr-2 mt-4">Precio $ 3,500</p>
+          </div>
+        </article>
         <section className="text-2xl mx-4 mt-4 p-1 h-[300px] rounded-lg w-auto bg-gradient-to-l from-blue-950 from-10% via-sky-950 via-30% bg-cyan-950 to-90%">
         </section>
         <section className="text-2xl mx-4 mt-4 p-1 h-[300px] rounded-lg w-auto bg-gradient-to-l from-blue-950 from-10% via-sky-950 via-30% bg-cyan-950 to-90%">
