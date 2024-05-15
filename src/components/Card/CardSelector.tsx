@@ -2,7 +2,7 @@ interface CardSelectorProps {
   children: React.ReactNode,
   className: string,
   href: string,
-  title: string
+  title?: string
 }
 
 export const CardSelector = (props: CardSelectorProps) => {
